@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indirect Rate Forecasting — A Field Guide for Services Businesses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f9fc;--paper:#fff;--ink:#0f1a2e;--ink-2:#41506b;--ink-3:#64748b;--line:#e2e8f0;--line-2:#edf1f6;--accent:#1f7a82;--accent-dark:#155e64;--accent-tint:#e9f2f3;--positive:#16a34a;--warn:#d97706;--danger:#dc2626;--sidebar-bg:#0d1730;--sans:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;--serif:"Lora",Georgia,serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:#155e64;text-decoration:underline}
+::selection{background:var(--accent);color:#fff}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 24px;height:56px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;letter-spacing:-0.02em;color:var(--ink);white-space:nowrap}
+.brand:hover{text-decoration:none;color:var(--ink)}
+.brand-mark{width:26px;height:26px;background:var(--accent);border-radius:7px;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800}
+.topnav .booktitle{font-size:13px;color:var(--ink-3);border-left:1px solid var(--line);padding-left:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topnav .spacer{flex:1}
+.progress{font-size:12px;color:var(--ink-3);font-family:var(--mono);white-space:nowrap}
+.layout{display:grid;grid-template-columns:288px minmax(0,1fr);padding-top:56px;min-height:100vh}
+.sidebar{position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;background:var(--paper);border-right:1px solid var(--line);padding:20px 12px 40px}
+.sb-part{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding:18px 12px 6px}
+.sb-part:first-child{padding-top:4px}
+.sb-link{display:flex;gap:8px;align-items:baseline;padding:6px 12px;border-radius:8px;font-size:13.5px;color:var(--ink-2);cursor:pointer;line-height:1.4}
+.sb-link:hover{background:var(--line-2);text-decoration:none;color:var(--ink)}
+.sb-link .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);min-width:18px}
+.sb-link.active{background:var(--accent-tint);color:var(--accent);font-weight:600}
+.sb-link.active .n{color:var(--accent)}
+.content{padding:48px 48px 96px;display:flex;justify-content:center}
+.page{width:100%;max-width:780px}
+.crumb{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+h1{font-size:34px;line-height:1.2;letter-spacing:-0.02em;font-weight:800;margin-bottom:10px}
+.lead{font-family:var(--serif);font-size:18.5px;line-height:1.6;color:var(--ink-2);margin:0 0 28px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+h2{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin:38px 0 12px}
+h3{font-size:17px;font-weight:700;margin:26px 0 8px}
+.page p{margin:0 0 14px;color:var(--ink);font-size:15.5px}
+.page ul,.page ol{margin:0 0 16px 24px}
+.page li{margin-bottom:6px;font-size:15.5px}
+.page strong{font-weight:700}
+code{font-family:var(--mono);font-size:.86em;background:var(--line-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+pre{font-family:var(--mono);font-size:13px;line-height:1.7;background:#0d1730;color:#d7e2f2;border-radius:10px;padding:16px 20px;overflow-x:auto;margin:0 0 18px}
+pre code{background:none;border:none;padding:0;color:inherit}
+table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px}
+th{text-align:left;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border-bottom:2px solid var(--ink);padding:8px 10px}
+td{border-bottom:1px solid var(--line);padding:8px 10px;vertical-align:top}
+td.num,th.num{text-align:right;font-family:var(--mono);font-size:13px}
+tr.total td{font-weight:700;border-top:2px solid var(--ink);border-bottom:none;background:var(--line-2)}
+.example{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin:20px 0;box-shadow:0 1px 2px rgb(15 23 42/.05)}
+.example .ex-tag{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.example p:last-child{margin-bottom:0}
+.note,.warnbox,.keybox{border-radius:10px;padding:14px 18px;margin:18px 0;font-size:14.5px}
+.note{background:var(--accent-tint);border-left:3px solid var(--accent)}
+.gov{background:#eef2f8;border-left:3px solid #64748b;border-radius:10px;padding:14px 18px;margin:18px 0;font-size:14.5px}
+.gov .g-tag{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.gov p:last-child{margin-bottom:0}
+.warnbox{background:#fef6e9;border-left:3px solid var(--warn)}
+.keybox{background:#0d1730;color:#d7e2f2;border-left:3px solid var(--accent)}
+.keybox .kb-tag{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#7ec6cc;margin-bottom:6px}
+.keybox p{color:#d7e2f2 !important;margin-bottom:0}
+.note p:last-child,.warnbox p:last-child{margin-bottom:0}
+.appbox{border:1px solid var(--accent);border-radius:12px;margin:26px 0;overflow:hidden}
+.appbox .ab-head{background:var(--accent);color:#fff;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:7px 18px;display:flex;gap:8px;align-items:center}
+.appbox .ab-body{padding:14px 18px;background:var(--paper)}
+.appbox .ab-body p:last-child,.appbox .ab-body ul:last-child,.appbox .ab-body ol:last-child{margin-bottom:0}
+.formula{font-family:var(--mono);font-size:14px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:16px 0;line-height:1.9;overflow-x:auto;white-space:pre}
+.pager{display:flex;gap:16px;margin-top:56px;padding-top:24px;border-top:1px solid var(--line)}
+.pager a{flex:1;border:1px solid var(--line);border-radius:12px;padding:14px 18px;background:var(--paper);display:block}
+.pager a:hover{border-color:var(--accent);text-decoration:none}
+.pager .dir{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2px}
+.pager .pt{font-size:14.5px;font-weight:600;color:var(--accent)}
+.pager .next{text-align:right}
+.cover{max-width:820px}
+.cover .coverhero{background:var(--sidebar-bg);color:#fff;border-radius:16px;padding:56px;margin-bottom:32px}
+.cover .coverhero .k{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7ec6cc;margin-bottom:16px}
+.cover .coverhero h1{color:#fff;font-size:40px;margin-bottom:14px}
+.cover .coverhero .sub{font-family:var(--serif);font-size:18px;color:#b6c2d9;max-width:560px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.toc-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.toc-card .tp{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.toc-card a{display:block;font-size:13.5px;padding:3px 0;color:var(--ink-2)}
+.toc-card a:hover{color:var(--accent)}
+.toc-card a .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-right:8px}
+.glossary dt{font-weight:700;margin-top:14px;font-size:15px}
+.glossary dd{margin-left:0;color:var(--ink-2);font-size:14.5px}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.sidebar{display:none}.content{padding:32px 20px 80px}.toc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a class="brand" href="#cover"><span class="brand-mark">F</span>ForwardRates</a>
+  <span class="booktitle">Indirect Rate Forecasting — A Field Guide for Services Businesses</span>
+  <span class="spacer"></span>
+  <span class="progress" id="progress"></span>
+</nav>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="content"><div class="page" id="page"></div></main>
+</div>
+<script src="book/part1.js"></script>
+<script src="book/part2.js"></script>
+<script src="book/part3.js"></script>
+<script src="book/part4.js"></script>
+<script src="book/part5.js"></script>
+<script src="book/part6.js"></script>
+<script src="book/part7.js"></script>
+<script src="book/appendices.js"></script>
+<script>
+const PARTS=[
+ {label:"Part I — Foundations of Cost Accounting",chapters:[[1,"ch1","How Businesses Classify Costs"],[2,"ch2","The Chart of Accounts"],[3,"ch3","Direct Costs in Depth"]]},
+ {label:"Part II — The Indirect Rate Structure",chapters:[[4,"ch4","What Indirect Rates Are and Why They Matter"],[5,"ch5","The Three Pools"],[6,"ch6","Pool Setup and Base Selection"],[7,"ch7","The Rate Cascade"]]},
+ {label:"Part III — The Forecast",chapters:[[8,"ch8","Run-Rate Forecasting"],[9,"ch9","Reading Your Forecast Output"],[10,"ch10","Budget vs. Provisional vs. Actual"]]},
+ {label:"Part IV — Scenario Modeling",chapters:[[11,"ch11","Why Rates Move"],[12,"ch12","Forecast Scenarios"],[13,"ch13","Pipeline-Driven Modeling"],[14,"ch14","Rate Adjustment Bands"]]},
+ {label:"Part V — Project Performance",chapters:[[15,"ch15","EVM Foundations"],[16,"ch16","Performance Indices"],[17,"ch17","Scenario EAC"],[18,"ch18","Project Status Reporting"]]},
+ {label:"Part VI — Compliance & Deliverables",chapters:[[19,"ch19","Audit Readiness"],[20,"ch20","The Rate Package"],[21,"ch21","Forward Pricing Rate Proposals"]]},
+ {label:"Part VII — Working in ForwardRates",chapters:[[22,"ch22","App Walkthrough"],[23,"ch23","Data Import Reference"],[24,"ch24","Automation & AI"]]},
+ {label:"Appendices",chapters:[["A","appA","Glossary"],["B","appB","FAR 31.205 Unallowable Costs"],["C","appC","Rate Package Checklist"]]}
+];
+const FLAT=PARTS.flatMap(p=>p.chapters.map(c=>({num:c[0],id:c[1],title:c[2],part:p.label})));
+window.BOOK=window.BOOK||{};
+function coverHTML(){
+ let toc=PARTS.map(p=>'<div class="toc-card"><div class="tp">'+p.label+'</div>'+p.chapters.map(c=>'<a href="#'+c[1]+'"><span class="n">'+c[0]+'</span>'+c[2]+'</a>').join('')+'</div>').join('');
+ return '<div class="cover"><div class="coverhero"><div class="k">ForwardRates Training Manual</div><h1>Indirect Rate Forecasting</h1><div class="sub">From cost classification to the rate cascade, scenario modeling, EVM, and audit-ready deliverables — for any business that recovers indirect cost through rates.</div></div><p style="margin-bottom:24px">This manual is written for a mixed audience: finance staff new to indirect rates, project managers, controllers and CFOs, and executives who need to read a rate table without a translator. Every chapter follows the same pattern — <strong>concept, why it matters, a worked example with real numbers, and how it appears in ForwardRates</strong>. Government-contracting specifics (FAR, DCAA, forward pricing) are kept, but framed as callouts and reference material — the rate mechanics are the same in any services business. Chapters stand alone; jump anywhere.</p><div class="toc-grid">'+toc+'</div></div>';
+}
+function render(){
+ let id=(location.hash||"#cover").slice(1);
+ const idx=FLAT.findIndex(c=>c.id===id);
+ const page=document.getElementById("page");
+ if(idx===-1||!window.BOOK[id]){page.innerHTML=coverHTML();document.getElementById("progress").textContent="";}
+ else{
+  const c=FLAT[idx];
+  let pager='<div class="pager">';
+  const prev=idx>0?FLAT[idx-1]:null,next=idx<FLAT.length-1?FLAT[idx+1]:null;
+  pager+=prev?'<a href="#'+prev.id+'"><div class="dir">← Previous</div><div class="pt">'+prev.num+'. '+prev.title+'</div></a>':'<a href="#cover"><div class="dir">← Back to</div><div class="pt">Contents</div></a>';
+  if(next)pager+='<a class="next" href="#'+next.id+'"><div class="dir">Next →</div><div class="pt">'+next.num+'. '+next.title+'</div></a>';
+  pager+='</div>';
+  page.innerHTML='<div class="crumb">'+c.part+' · '+(typeof c.num==="number"?"Chapter ":"Appendix ")+c.num+'</div>'+window.BOOK[id]+pager;
+  document.getElementById("progress").textContent=(typeof c.num==="number")?("Chapter "+c.num+" / 24"):("Appendix "+c.num);
+ }
+ document.querySelectorAll(".sb-link").forEach(el=>el.classList.toggle("active",el.dataset.id===id));
+ document.querySelector(".content").parentElement.scrollTop=0;window.scrollTo(0,0);
+ try{localStorage.setItem("fr-book-pos",id)}catch(e){}
+}
+function buildSidebar(){
+ const sb=document.getElementById("sidebar");
+ sb.innerHTML=PARTS.map(p=>'<div class="sb-part">'+p.label.replace(/ — /,'<br>')+'</div>'+p.chapters.map(c=>'<a class="sb-link" data-id="'+c[1]+'" href="#'+c[1]+'"><span class="n">'+c[0]+'</span><span>'+c[2]+'</span></a>').join('')).join('');
+}
+buildSidebar();
+if(!location.hash){try{const s=localStorage.getItem("fr-book-pos");if(s&&s!=="cover")location.hash=s}catch(e){}}
+window.addEventListener("hashchange",render);
+render();
+</script>
+</body>
+</html>
